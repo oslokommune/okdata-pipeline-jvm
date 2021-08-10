@@ -1,0 +1,58 @@
+def fra_id(bydel_id)
+  get-key($bydeler, $bydel_id)
+
+def fra_navn(bydel_navn)
+  let navn = lowercase($bydel_navn)
+  let id = fallback(
+    get-key($bydeler_etter_navn, $navn),
+    get-key($bydeler_etter_navn, "bydel " + $navn)
+  )
+  get-key($bydeler, $id)
+
+let bydeler = {
+  "00": {"id": "00", "navn": "Oslo i alt"},
+  "01": {"id": "01", "navn": "Bydel Gamle Oslo"},
+  "02": {"id": "02", "navn": "Bydel Grünerløkka"},
+  "03": {"id": "03", "navn": "Bydel Sagene"},
+  "04": {"id": "04", "navn": "Bydel St. Hanshaugen"},
+  "05": {"id": "05", "navn": "Bydel Frogner"},
+  "06": {"id": "06", "navn": "Bydel Ullern"},
+  "07": {"id": "07", "navn": "Bydel Vestre Aker"},
+  "08": {"id": "08", "navn": "Bydel Nordre Aker"},
+  "09": {"id": "09", "navn": "Bydel Bjerke"},
+  "10": {"id": "10", "navn": "Bydel Grorud"},
+  "11": {"id": "11", "navn": "Bydel Stovner"},
+  "12": {"id": "12", "navn": "Bydel Alna"},
+  "13": {"id": "13", "navn": "Bydel Østensjø"},
+  "14": {"id": "14", "navn": "Bydel Nordstrand"},
+  "15": {"id": "15", "navn": "Bydel Søndre Nordstrand"},
+  "16": {"id": "16", "navn": "Sentrum"},
+  "17": {"id": "17", "navn": "Marka"},
+  "99": {"id": "99", "navn": "Uten registrert adresse"}
+}
+
+let bydeler_etter_navn = {
+  "oslo i alt": "00",
+  "bydel gamle oslo": "01",
+  "bydel grünerløkka": "02",
+  "bydel sagene": "03",
+  "bydel st. hanshaugen": "04",
+  "bydel st.hanshaugen": "04",
+  "bydel st hanshaugen": "04",
+  "bydel frogner": "05",
+  "bydel ullern": "06",
+  "bydel vestre aker": "07",
+  "bydel nordre aker": "08",
+  "bydel bjerke": "09",
+  "bydel grorud": "10",
+  "bydel stovner": "11",
+  "bydel alna": "12",
+  "bydel østensjø": "13",
+  "bydel nordstrand": "14",
+  "bydel søndre nordstrand": "15",
+  "sentrum": "16",
+  "marka": "17",
+  "uten registrert adresse": "99",
+  "uoppgitt": "99",
+  "sentrum, marka, ura": "99"
+}

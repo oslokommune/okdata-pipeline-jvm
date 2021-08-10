@@ -1,0 +1,25 @@
+{
+  "execution_name": "test_execution",
+  "task": "json2csv",
+  "payload": {
+    "pipeline": {
+      "id": "some-pipeline",
+      "task_config": {
+        "json2csv": null
+      }
+    },
+    "output_dataset": {
+      "id": "output-dataset-id",
+      "version": "1",
+      "edition": "20190131T000000",
+      "s3_prefix": "%stage%/yellow/output-dataset-id/version=1/edition=20190131T000000/"
+    },
+    "step_data": {
+      "s3_input_prefixes": {
+        "vedlikeholdsutgifter-renovasjonsbiler": "incoming/yellow/input-dataset-id/version=1/edition=20190131T000000/"
+      },
+      "status": "SOME STATUS",
+      "errors": []
+    }
+  }
+}

@@ -1,0 +1,49 @@
+frameworkVersion: ">=2.10.0 <3.0.0"
+service: okdata-pipeline-jvm
+
+provider:
+  name: aws
+  runtime: java11
+  region: ${opt:region, 'eu-west-1'}
+  stage: ${opt:stage, 'dev'}
+  deploymentBucket:
+    name: ${self:custom.deploymentBucket.${self:provider.stage}, self:custom.deploymentBucket.dev}
+    serverSideEncryption: AES256
+  deploymentPrefix: deploy
+  rolePermissionsBoundary: "arn:aws:iam::#{AWS::AccountId}:policy/oslokommune/oslokommune-boundary"
+  iamManagedPolicies:
+    - 'arn:aws:iam::#{AWS::AccountId}:policy/pipeline_component_policy'
+  tags:
+    GIT_REV: ${git:branch}:${git:sha1}
+  environment:
+    SERVICE_NAME: ${self:service}
+    GIT_REV: ${git:branch}:${git:sha1}
+    BUCKET_NAME: ${self:custom.dataplatformBucket.${self:provider.stage}, self:custom.dataplatformBucket.dev}
+
+package:
+  artifact: build/libs/okdata-pipeline-jvm-all.jar
+
+functions:
+  json2json:
+    handler: no.ok.origo.dataplatform.jsontransformer.Json2JsonHandler
+    timeout: 70
+  json2csv:
+    handler: no.ok.origo.dataplatform.jsontransformer.Json2CsvHandler
+    timeout: 70
+
+plugins:
+  - serverless-plugin-git-variables
+  - serverless-pseudo-parameters
+  - serverless-es-logs
+
+custom:
+  deploymentBucket:
+    prod: ok-origo-dataplatform-config-prod
+    dev: ok-origo-dataplatform-config-dev
+  dataplatformBucket:
+    prod: ok-origo-dataplatform-prod
+    dev: ok-origo-dataplatform-dev
+  esLogs:
+    endpoint: ${ssm:/dataplatform/shared/logs-elasticsearch-endpoint}
+    index: dataplatform-services
+    filterPattern: '{ $.function_name = "*" }'

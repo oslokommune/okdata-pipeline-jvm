@@ -1,0 +1,11 @@
+def zero_pad(str, len)
+  if (size($str) < $len)
+    "0" + zero_pad($str, $len - 1)
+  else
+    $str
+
+def range(a, b)
+  if ($a < $b)
+    [$a] + range($a+1, $b)
+  else
+    []

@@ -1,0 +1,27 @@
+{
+  "execution_name": "test_execution",
+  "task": "json2json",
+  "payload": {
+    "pipeline": {
+      "id": "some-pipeline",
+      "task_config": {
+        "json2json": {
+          "jslt": "let idparts = split(.id, \"-\")\nlet xxx = [for ($idparts) \"x\" * size(.)]\n\n{\n    \"id\" : join($xxx, \"-\"),\n    \"type\" : \"Anonymized-View\",\n    * : .\n}"
+        }
+      }
+    },
+    "output_dataset": {
+      "id": "output-dataset-id",
+      "version": "1",
+      "edition": "20190131T000000",
+      "s3_prefix": "%stage%/yellow/output-dataset-id/version=1/edition=20190131T000000/"
+    },
+    "step_data": {
+      "s3_input_prefixes": {
+        "input-dataset": "raw/yellow/input-dataset-id/version=1/edition=20190131T000000/"
+      },
+      "status": "SOME STATUS",
+      "errors": []
+    }
+  }
+}

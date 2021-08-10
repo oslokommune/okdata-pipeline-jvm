@@ -1,0 +1,29 @@
+{
+  "execution_name": "test_execution",
+  "task": "json2json",
+  "payload": {
+    "pipeline": {
+      "id": "some-pipeline",
+      "task_config": {
+        "json2json": {
+          "jslt": "let idparts = split(.id, \"-\")\nlet xxx = [for ($idparts) \"x\" * size(.)]\n\n{\n    \"id\" : join($xxx, \"-\"),\n    \"type\" : \"Anonymized-View\",\n    * : .\n}"
+        }
+      }
+    },
+    "output_dataset": {
+      "id": "output-dataset-id",
+      "version": "1"
+    },
+    "step_data": {
+      "input_events": [
+        {
+          "schema": "http://schemas.io/thing/simple.json",
+          "id": "w23q7ca1-8729-24923-922b-1c0517ddffjf1",
+          "type": "View"
+        }
+      ],
+      "status": "SOME STATUS",
+      "errors": []
+    }
+  }
+}
