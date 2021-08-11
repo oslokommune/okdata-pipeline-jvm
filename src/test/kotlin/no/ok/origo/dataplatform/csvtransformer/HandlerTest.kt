@@ -3,7 +3,9 @@ package no.ok.origo.dataplatform.csvtransformer
 import com.adobe.testing.s3mock.junit5.S3MockExtension
 import no.ok.origo.dataplatform.TestContext
 import no.ok.origo.dataplatform.jsontransformer.TestUtils
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.services.s3.S3Client
 import software.amazon.awssdk.services.s3.model.CreateBucketRequest
@@ -88,5 +90,4 @@ class HandlerTest : S3MockExtension() {
         }.bufferedReader().readText()
         assert(response == "d;e;f\n2;1;3\n5;4;6\n")
     }
-
 }
