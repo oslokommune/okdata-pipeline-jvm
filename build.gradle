@@ -11,6 +11,7 @@ version = '0.0.1'
 repositories {
   mavenCentral()
   jcenter()
+  maven { url 'https://jitpack.io' }
 }
 
 dependencyManagement {
@@ -28,11 +29,12 @@ test {
 }
 
 dependencies {
-  implementation 'no.ok.origo.dataplatform:common-jvm:0.4.5'
+  implementation 'com.github.oslokommune:okdata-common-jvm:0.7.0'
   implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
   implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.12.+'
   implementation 'software.amazon.awssdk:s3:2.15.+'
-  implementation 'no.ok.origo:csvlt:0.1.8'
+  implementation 'com.schibsted.spt.data:jslt:0.1.11'
+  implementation 'com.github.oslokommune:csvlt:0.1.9'
   implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
 
   implementation 'org.apache.commons:commons-csv:1.6'
