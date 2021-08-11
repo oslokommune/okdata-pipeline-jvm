@@ -30,6 +30,16 @@ functions:
   json2csv:
     handler: no.ok.origo.dataplatform.jsontransformer.Json2CsvHandler
     timeout: 70
+  csv2csv:
+    handler: no.ok.origo.dataplatform.csvtransformer.Handler
+    timeout: 70
+  playground:
+    handler: no.ok.origo.dataplatform.csvtransformer.PlaygroundHandler
+    events:
+      - http:
+          path: playground
+          method: post
+          cors: true
 
 plugins:
   - serverless-plugin-git-variables
