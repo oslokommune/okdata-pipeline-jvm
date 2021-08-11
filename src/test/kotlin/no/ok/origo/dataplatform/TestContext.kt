@@ -1,4 +1,4 @@
-package no.ok.origo.dataplatform.jsontransformer
+package no.ok.origo.dataplatform
 
 import com.amazonaws.services.lambda.runtime.ClientContext
 import com.amazonaws.services.lambda.runtime.CognitoIdentity

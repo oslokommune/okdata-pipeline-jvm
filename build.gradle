@@ -42,7 +42,9 @@ dependencies {
   testImplementation "org.junit.jupiter:junit-jupiter-api:5.3.2"
   testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.3.2"
   testImplementation "io.mockk:mockk:1.10.0"
-  testImplementation group: 'io.findify', name: 's3mock_2.12', version: '0.2.5'
+  testImplementation("com.adobe.testing:s3mock-junit5:2.1.28") {
+    exclude group: "ch.qos.logback"
+  }
 }
 
 shadowJar {

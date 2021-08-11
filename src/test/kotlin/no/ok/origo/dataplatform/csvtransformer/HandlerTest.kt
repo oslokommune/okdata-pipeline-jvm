@@ -1,24 +1,17 @@
 package no.ok.origo.dataplatform.csvtransformer
 
-import io.findify.s3mock.S3Mock
-import io.mockk.every
-import io.mockk.mockkStatic
-import io.mockk.unmockkStatic
-import no.ok.origo.dataplatform.commons.lambda.TestContext
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
+import com.adobe.testing.s3mock.junit5.S3MockExtension
+import no.ok.origo.dataplatform.TestContext
+import no.ok.origo.dataplatform.jsontransformer.TestUtils
+import org.junit.jupiter.api.*
 import software.amazon.awssdk.core.sync.RequestBody
-import software.amazon.awssdk.regions.Region
 import software.amazon.awssdk.services.s3.S3Client
+import software.amazon.awssdk.services.s3.model.CreateBucketRequest
 import software.amazon.awssdk.services.s3.model.PutObjectRequest
 import java.io.ByteArrayOutputStream
-import java.net.ServerSocket
-import java.net.URI
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class HandlerTest {
+class HandlerTest : S3MockExtension() {
 
     val json_input_string = """{
   "execution_name": "boligpriser-UUID",
@@ -53,53 +46,47 @@ class HandlerTest {
     }
   }
 }"""
-    lateinit var api: S3Mock
-    val bucket = "test-bucket"
 
-    @AfterEach
-    fun afterEach() {
-        api.shutdown()
-        unmockkStatic(S3Client::class)
+    private lateinit var s3Client: S3Client
+    val bucket = System.getenv("BUCKET_NAME")
+
+    override fun start() {
+        super.start()
+        TestUtils.fixUntrustCertificate()
     }
 
-    @BeforeEach
-    fun beforeEach() {
-        val availablePort = getAvailablePort()
-        System.setProperty("BUCKET_NAME", bucket)
-        api = S3Mock.Builder().withPort(availablePort).withInMemoryBackend().build()
-        api.start()
+    @BeforeAll
+    fun init() {
+        start()
+        s3Client = createS3ClientV2()
 
-        val localS3Client = S3Client.builder()
-            .endpointOverride(URI.create("http://localhost:$availablePort"))
-            .region(Region.EU_WEST_1)
+        val s3Bucket = CreateBucketRequest.builder()
+            .bucket(bucket)
             .build()
-        localS3Client.createBucket { it.bucket(bucket).build() }
 
-        localS3Client.putObject(
+        s3Client.createBucket(s3Bucket)
+
+        s3Client.putObject(
             PutObjectRequest.builder()
                 .bucket(bucket)
                 .key("raw/green/boligpriser/version=1/edition=20200120T133700/test.csv")
                 .build(),
             RequestBody.fromString("a;b;c\n1;2;3\n4;5;6")
         )
-        mockkStatic(S3Client::class)
-        every { S3Client.create() } returns localS3Client
     }
 
     @Test
     fun `integration test Handler`() {
-        val handler = Handler()
+        val handler = Handler(s3Client)
         val output = ByteArrayOutputStream()
 
-        handler.handleRequest(json_input_string.byteInputStream(), output, TestContext())
+        val ctx = TestContext("aws-request-id-1234")
+        handler.handleRequest(json_input_string.byteInputStream(), output, ctx)
         val outputKey = "intermediate/green/boligpriser/version=1/edition=20200120T133701/transform_csv/test.csv"
-        val response = handler.s3.getObject {
+        val response = s3Client.getObject {
             it.bucket(bucket).key(outputKey).build()
         }.bufferedReader().readText()
         assert(response == "d;e;f\n2;1;3\n5;4;6\n")
     }
 
-    fun getAvailablePort(): Int {
-        return ServerSocket(0).localPort
-    }
 }

@@ -21,9 +21,8 @@ import java.io.OutputStream
 import java.io.Reader
 import java.util.zip.GZIPInputStream
 
-class Handler : DataplatformLoggingHandler() {
+class Handler(private val s3: S3Client = S3Client.create()) : DataplatformLoggingHandler() {
     val bucket = System.getenv("BUCKET_NAME") ?: System.getProperty("BUCKET_NAME")
-    val s3: S3Client = S3Client.create()
     private val om = jacksonObjectMapper()
 
     override fun handleRequestWithLogging(input: InputStream, output: OutputStream, context: Context) {

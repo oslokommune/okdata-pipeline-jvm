@@ -3,6 +3,7 @@ package no.ok.origo.dataplatform.jsontransformer
 import com.adobe.testing.s3mock.junit5.S3MockExtension
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import no.ok.origo.dataplatform.TestContext
 import no.ok.origo.dataplatform.commons.pipeline.config.StepData
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeAll
