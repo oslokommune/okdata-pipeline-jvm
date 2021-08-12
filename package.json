@@ -1,5 +1,5 @@
 {
-  "name": "lambda-invoker",
+  "name": "okdata-pipeline-jvm",
   "description": "",
   "version": "0.1.0",
   "devDependencies": {
