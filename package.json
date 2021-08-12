@@ -4,7 +4,6 @@
   "version": "0.1.0",
   "devDependencies": {
     "serverless-es-logs": "^3.4.1",
-    "serverless-plugin-git-variables": "^3.3.2",
-    "serverless-pseudo-parameters": "^2.5.0"
+    "serverless-plugin-git-variables": "^3.3.2"
   }
 }
