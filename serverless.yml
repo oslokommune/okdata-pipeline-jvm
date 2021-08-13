@@ -10,9 +10,9 @@ provider:
     name: ${self:custom.deploymentBucket.${self:provider.stage}, self:custom.deploymentBucket.dev}
     serverSideEncryption: AES256
   deploymentPrefix: deploy
-  rolePermissionsBoundary: "arn:aws:iam::#{AWS::AccountId}:policy/oslokommune/oslokommune-boundary"
+  rolePermissionsBoundary: !Sub "arn:aws:iam::${AWS::AccountId}:policy/oslokommune/oslokommune-boundary"
   iamManagedPolicies:
-    - 'arn:aws:iam::#{AWS::AccountId}:policy/pipeline_component_policy'
+    - !Sub 'arn:aws:iam::${AWS::AccountId}:policy/pipeline_component_policy'
   tags:
     GIT_REV: ${git:branch}:${git:sha1}
   environment:
@@ -43,7 +43,6 @@ functions:
 
 plugins:
   - serverless-plugin-git-variables
-  - serverless-pseudo-parameters
   - serverless-es-logs
 
 custom:
