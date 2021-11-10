@@ -34,7 +34,7 @@ dependencies {
   implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.12.+'
   implementation 'software.amazon.awssdk:s3:2.15.+'
   implementation 'com.schibsted.spt.data:jslt:0.1.11'
-  implementation 'com.github.oslokommune:csvlt:0.1.9'
+  implementation 'com.github.oslokommune:csvlt:0.1.11'
   implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
 
   implementation 'org.apache.commons:commons-csv:1.6'
