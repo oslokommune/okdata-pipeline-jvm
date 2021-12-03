@@ -1,7 +1,7 @@
 Json to Json transformer
 ========================
 
-Lambda funtion that transforms json using [JSLT](https://github.com/schibsted/jslt).
+Pipeline component for transforming json using [JSLT](https://github.com/schibsted/jslt).
 
 ## Input event
 
