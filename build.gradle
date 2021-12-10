@@ -36,6 +36,11 @@ dependencies {
   implementation 'com.schibsted.spt.data:jslt:0.1.11'
   implementation 'com.github.oslokommune:csvlt:0.1.11'
   implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+  implementation 'org.slf4j:slf4j-api:1.7.26'
+
+  // 2.0 <= Apache log4j <= 2.14.1 contains a 0-day exploit: https://www.lunasec.io/docs/blog/log4j-zero-day/
+  runtimeOnly "org.apache.logging.log4j:log4j-core:2.15.0"
+  runtimeOnly "org.apache.logging.log4j:log4j-api:2.15.0"
 
   implementation 'org.apache.commons:commons-csv:1.6'
   implementation 'com.amazonaws:aws-lambda-java-core:1.1.0'
@@ -46,6 +51,7 @@ dependencies {
   testImplementation "io.mockk:mockk:1.10.0"
   testImplementation("com.adobe.testing:s3mock-junit5:2.1.28") {
     exclude group: "ch.qos.logback"
+    exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
   }
 }
 
