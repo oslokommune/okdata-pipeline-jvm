@@ -1,7 +1,7 @@
 CSV to CSV transformer
 ======================
 
-Lambda function that transforms CSV using [CSVLT](https://github.oslo.kommune.no/origo-dataplatform/csvlt).
+Pipeline component for transforming CSV using [CSVLT](https://github.oslo.kommune.no/origo-dataplatform/csvlt).
 
 CSVLT is based on [JSLT](https://github.com/schibsted/jslt), a [language tutorial](https://github.com/schibsted/jslt/blob/master/tutorial.md) is available.
 
