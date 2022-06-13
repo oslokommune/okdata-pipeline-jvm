@@ -23,12 +23,12 @@ build:
 	./gradlew shadowJar
 
 .PHONY: deploy
-deploy: login-dev init format test
+deploy: init test build login-dev
 	@echo "\nDeploying to stage: dev\n"
 	sls deploy --stage dev --aws-profile $(.DEV_PROFILE)
 
 .PHONY: deploy-prod
-deploy-prod: login-prod init format is-git-clean test
+deploy-prod: init is-git-clean test build login-prod
 	sls deploy --stage prod --aws-profile $(.PROD_PROFILE)
 
 .PHONY: undeploy
