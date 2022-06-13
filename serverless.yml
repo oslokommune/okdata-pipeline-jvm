@@ -33,13 +33,6 @@ functions:
   csv2csv:
     handler: no.ok.origo.dataplatform.csvtransformer.Handler
     timeout: 70
-  playground:
-    handler: no.ok.origo.dataplatform.csvtransformer.PlaygroundHandler
-    events:
-      - http:
-          path: playground
-          method: post
-          cors: true
 
 plugins:
   - serverless-plugin-git-variables
