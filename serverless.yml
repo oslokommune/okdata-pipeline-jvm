@@ -1,4 +1,5 @@
-frameworkVersion: ">=2.10.0 <3.0.0"
+frameworkVersion: ">=3.14.0 <4.0.0"
+
 service: okdata-pipeline-jvm
 
 provider:
@@ -10,9 +11,12 @@ provider:
     name: ${self:custom.deploymentBucket.${self:provider.stage}, self:custom.deploymentBucket.dev}
     serverSideEncryption: AES256
   deploymentPrefix: deploy
-  rolePermissionsBoundary: !Sub "arn:aws:iam::${AWS::AccountId}:policy/oslokommune/oslokommune-boundary"
-  iamManagedPolicies:
-    - !Sub 'arn:aws:iam::${AWS::AccountId}:policy/pipeline_component_policy'
+  logRetentionInDays: 90
+  iam:
+    role:
+      permissionsBoundary: "arn:aws:iam::${aws:accountId}:policy/oslokommune/oslokommune-boundary"
+      managedPolicies:
+        - 'arn:aws:iam::${aws:accountId}:policy/pipeline_component_policy'
   tags:
     GIT_REV: ${git:branch}:${git:sha1}
   environment:
@@ -35,10 +39,14 @@ functions:
     timeout: 70
 
 plugins:
-  - serverless-plugin-git-variables
   - serverless-es-logs
+  - serverless-plugin-git-variables
+  - serverless-prune-plugin
 
 custom:
+  prune:
+    automatic: true
+    number: 3
   deploymentBucket:
     prod: ok-origo-dataplatform-config-prod
     dev: ok-origo-dataplatform-config-dev
