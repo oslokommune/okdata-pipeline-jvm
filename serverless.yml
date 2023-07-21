@@ -39,7 +39,6 @@ functions:
     timeout: 70
 
 plugins:
-  - serverless-es-logs
   - serverless-plugin-git-variables
   - serverless-prune-plugin
 
@@ -53,7 +52,3 @@ custom:
   dataplatformBucket:
     prod: ok-origo-dataplatform-prod
     dev: ok-origo-dataplatform-dev
-  esLogs:
-    endpoint: ${ssm:/dataplatform/shared/logs-elasticsearch-endpoint}
-    index: dataplatform-services
-    filterPattern: '{ $.function_name = "*" }'
