@@ -39,6 +39,7 @@ functions:
     timeout: 70
 
 plugins:
+  - serverless-better-credentials # must be first
   - serverless-plugin-git-variables
   - serverless-prune-plugin
 
