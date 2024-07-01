@@ -16,7 +16,7 @@
     },
     "step_data": {
       "s3_input_prefixes": {
-        "vedlikeholdsutgifter-renovasjonsbiler": "incoming/yellow/input-dataset-id/version=1/edition=20190131T000000/"
+        "vedlikeholdsutgifter-renovasjonsbiler": "raw/yellow/input-dataset-id/version=1/edition=20190131T000000/"
       },
       "status": "SOME STATUS",
       "errors": []

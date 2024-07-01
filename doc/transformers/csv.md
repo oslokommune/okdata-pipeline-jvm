@@ -13,7 +13,7 @@ Example Lambda event input:
 
 ```json
 {
-  "input": "s3://ok-origo-dataplatform-dev/incoming/green/test/boligpriser.csv",
+  "input": "s3://ok-origo-dataplatform-dev/raw/green/test/boligpriser.csv",
   "output": "s3://ok-origo-dataplatform-dev/intermediate/green/test/boligpriser.csv",
   "csvlt": "def zeroes(length)\n  if ($length < 1)\n    \"\"\n  else\n    \"0\" + zeroes($length - 1)\n\ndef delbydel_id(delbydel_nummer)\n  let nr = string(round(number($delbydel_nummer)))\n  zeroes(4 - size($nr)) + $nr\n\n{\n  \"delbydel_id\": delbydel_id(.Delbydelnummer),\n  \"navn\": .Delbydelsnavn\n}\n",
   "delimiter": ";"

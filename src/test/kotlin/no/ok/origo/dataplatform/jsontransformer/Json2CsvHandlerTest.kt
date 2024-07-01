@@ -64,7 +64,7 @@ class Json2CsvHandlerTest : S3MockExtension() {
         val handler = Json2CsvHandler(s3Client)
 
         val inputJson = TestUtils.readTestResource("json2csv/json2CsvInput.json")
-        handler.writeToS3("incoming/yellow/input-dataset-id/version=1/edition=20190131T000000/test_data.json", inputJson)
+        handler.writeToS3("raw/yellow/input-dataset-id/version=1/edition=20190131T000000/test_data.json", inputJson)
 
         val output = ByteArrayOutputStream()
         handler.handleRequestWithLogging(lambdaEvent.byteInputStream(), output, ctx)
